@@ -5,20 +5,13 @@ import (
 )
 
 func main() {
-	var num int
-	var rev int
+	var rev, rem, num int
 	fmt.Println("Enter the number")
 	fmt.Scan(&num)
-	ori := num
 	for num != 0 {
-		rem := num % 10
+		rem = num % 10
 		rev = rev*10 + rem
 		num /= 10
 	}
-	fmt.Println(num)
-	if rev == ori {
-		fmt.Println("Yes")
-	} else {
-		fmt.Println("NO")
-	}
+	fmt.Println(rev)
 }

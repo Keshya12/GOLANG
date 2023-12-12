@@ -6,7 +6,7 @@ import (
 )
 
 func romanToDecimal(roman string) int {
-	romanNumerals := map[rune]int{
+	romanNumerals := map[byte]int{
 		'I': 1,
 		'V': 5,
 		'X': 10,
@@ -19,10 +19,10 @@ func romanToDecimal(roman string) int {
 	result := 0
 	prev := 0
 
-	for _, r := range roman {
-		current := romanNumerals[r]
-		if current > prev {
-			result += current - 2*prev
+	for i := len(roman) - 1; i >= 0; i-- {
+		current := romanNumerals[roman[i]]
+		if current < prev {
+			result -= current
 		} else {
 			result += current
 		}
@@ -38,6 +38,7 @@ func main() {
 	fmt.Println("Enter the Roman numeral:")
 	fmt.Scan(&s)
 
+	// Convert Roman numeral to decimal number
 	result := romanToDecimal(strings.ToUpper(s))
 	fmt.Println("Decimal number:", result)
 }
