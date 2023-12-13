@@ -1,5 +1,7 @@
 package main
 
+//import "fmt"
+
 type scoreType int
 
 // simailar to define enum (itematic way of writing golang)
@@ -17,7 +19,8 @@ type nutritionalScore struct {
 	scoreType scoreType //The type we have designed in the begining of this file.
 }
 
-var scoreToLetter = []string{"A", "B", "C", "D", "E"}
+//The values were based on the nutritional chart refered
+var scoreToLetter = []string{"", "THE BEST", "BETTER", "NOT TO TAKE FREQUENTLY", "BETTER TO AVOID", "WORST"}
 var energyLevel = []float64{3350, 3015, 2680, 2345, 2010, 1675, 1005, 670, 335}
 var sugarLevel = []float64{45, 60, 36, 31, 27, 22.5, 18, 13.5, 9, 4.5}
 var satFattyAcidLevel = []float64{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
@@ -32,7 +35,7 @@ var beverageSugarLevel = []float64{13.5, 12, 10, 9, 7.5, 6, 5, 3, 1.5, 0}
 type energyKJ float64
 type sugarGms float64
 type satFattyAcid float64
-type sodiumMg float64
+type sodiumMig float64
 type fruitPercent float64
 type fibreGms float64
 type protienGms float64
@@ -42,11 +45,11 @@ type nutriData struct {
 	energy       energyKJ
 	sugar        sugarGms
 	satFattyAcid satFattyAcid
-	sodium       sodiumMg
+	sodium       sodiumMig
 	fruit        fruitPercent
 	fibre        fibreGms
 	protein      protienGms
-	isWater      bool
+	//isWater      bool
 }
 
 // struct methods
@@ -66,7 +69,7 @@ func (s sugarGms) getPoints(st scoreType) int {
 func (sat satFattyAcid) getPoints(st scoreType) int {
 	return getPointsFromRange(float64(sat), satFattyAcidLevel)
 }
-func (sod sodiumMg) getPoints(st scoreType) int {
+func (sod sodiumMig) getPoints(st scoreType) int {
 	return getPointsFromRange(float64(sod), sodiumLevel)
 }
 func (f fibreGms) getPoints(st scoreType) int {
@@ -95,12 +98,13 @@ func (fr fruitPercent) getPoints(st scoreType) int {
 func (p protienGms) getPoints(st scoreType) int {
 	return getPointsFromRange(float64(p), proteinLevel)
 }
-func energyFromKJ(kcal float64) energyKJ {
+
+/*func  energyFromKJ(kcal float64) energyKJ {
 	return energyKJ(kcal * 4.184)
 }
-func sodiumFromSalt(saltMg float64) sodiumMg {
-	return sodiumMg(saltMg / 2.5)
-}
+func  sodiumMg(saltMg float64) sodiumMig {
+	return sodiumMig(saltMg / 2.5)
+}*/
 func getNutritionalScore(n nutriData, st scoreType) nutritionalScore {
 	value := 0
 	positive := 0
@@ -134,7 +138,8 @@ func (ns nutritionalScore) getNutriScore() string {
 		return scoreToLetter[getPointsFromRange(float64(ns.value), []float64{18, 10, 2, -1})] //here in float64 we have passed final value of nutritionalScore
 		//in the result the scoreletter value after processing the function the value is between 0 to 4 the result is mapped to the appropriate index either A,B,C,D,E
 	}
-	if ns.scoreType == water {
+	var isWater bool
+	if isWater {
 		return scoreToLetter[0]
 	}
 	return scoreToLetter[getPointsFromRange(float64(ns.value), []float64{9, 5, 1, -2})]
